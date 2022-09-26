@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+#mandatory flag --rerun-tasks, otherwise build will be successful second run without making changes
+./gradlew ktlintFormat --rerun-tasks && git add -u
