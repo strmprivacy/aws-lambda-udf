@@ -52,11 +52,17 @@ val sourcesJar = tasks.register("sourcesJar", Jar::class) {
     archiveClassifier.set("sources")
 }
 
+val javadocJar = tasks.register("javadocJar", Jar::class) {
+    from(tasks["javadoc"])
+    archiveClassifier.set("javadoc")
+}
+
 publishing {
     publications {
         register("mavenJava", MavenPublication::class) {
             from(components["java"])
             artifact(sourcesJar)
+            artifact(javadocJar)
 
             groupId = "io.strmprivacy.aws-lambda-udfs"
             artifactId = "decrypter"
@@ -65,6 +71,7 @@ publishing {
             pom {
                 description.set(project.description)
                 url.set("https://strmprivacy.io")
+                name.set("$groupId:$artifactId")
 
                 licenses {
                     license {
